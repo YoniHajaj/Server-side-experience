@@ -19,7 +19,7 @@ fastify.get('/api/location/search/:location', async (request, reply) => {
     const data = await response.json();
     console.log(data);
     reply.send(data);
-  })
+})
 
 
   fastify.get('/api/location/:id', async (request, reply) => {
@@ -30,6 +30,7 @@ fastify.get('/api/location/search/:location', async (request, reply) => {
     reply.send(data);
   })
 
+  
 const start = async () => {
   try {
     await fastify.listen(3000);

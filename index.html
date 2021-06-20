@@ -5,16 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="pick.css">
 </head>
 <body>
        <form action="#" class="form">
-       <label for = "search">search</label>
-       <input type="text" name="search" id="search">
+       <!-- <label for = "search">search</label> -->
+       <input type="text" name="search" id="search" >
        <input type="submit" value="search">
    </form> 
 
-   <p id="test"></p> 
-  
+   <div class="test">
+    <div class="city">  </div>
+   </div>
+
 </body>
 
 <script>
@@ -30,9 +33,12 @@
             (this.querySelector('[name=search]')).value = ""
         }
         
-        form.addEventListener('submit',search)
+         
         
-
+        //    function chek(kl) {
+        //     kl.preventDefault();
+        //     const chart = (this.querySelector(['']))
+        // }
 // function callbackFunction(params) {
 //         params.preventDefault();
 //         console.log(params.srcElement.value);
@@ -44,35 +50,47 @@
 //         callbackFunction
 //     );
 
+           form.addEventListener('submit',search);
 
             let test = document.querySelector('.test');
             async function getLocation(params) {
-            const response = await fetch(`http://localhost:3000/api/location/search/${params}`);
+            const response = await fetch(`http://localhost:3000/api/location/search/${params}`)
             const data = await response.json();
-            t(data);
-       
-            
+           
            
 
-    
+                 let i = 0;
                 data.forEach((key, value) => {
-                let p = document.createElement('div');
-                p.innerHTML = key.title;
-                document.body.appendChild(p);
-                console.log(key);
-            });
-            
-        }   
-        
-        
-            async function t(data) {
-            const res = await fetch(`http://localhost:3000/api/location/${data[0].woeid}`);
-            const location = await res.json();
+                let p = document.createElement('p');
+                p.classList.add(key.woeid);
+                i++;
+                test.appendChild(p);
                 
-               console.log(location);
 
+                p.innerHTML = key.title;
+                console.log(key);
+                
+            });
+           
+        }   
 
+        
+        
+        let city = document.querySelector('.city');
+        test.addEventListener("click",(params)=>{
+                
+                console.log(params.path[0].className);
+              
+               t(params.path[0].className);
+                })
+
+        
+            async function t(k) {
+            const res = await fetch(`http://localhost:3000/api/location/${k}`);
+            const location = await res.json();
+            console.log(location);    
             
+            p.innerHTML = location.consolidated_weather[0].max_temp;
 }
 
 </script>
